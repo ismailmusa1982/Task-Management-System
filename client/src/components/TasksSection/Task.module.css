@@ -1,0 +1,231 @@
+.task-container {
+  width: 100%;
+  margin-top: 25px;
+  padding-top: 20px;
+  padding-bottom: 90px;
+  overflow-x: auto;
+}
+
+.task-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.task-container table tbody td {
+  padding-block: 10px;
+  background-color: rgba(212, 209, 247, 0.27);
+}
+
+.task-container table tbody tr:hover {
+  background-color: rgba(212, 209, 247, 0.16);
+}
+
+.task-container table thead tr {
+  background-color: rgba(212, 209, 247, 0.56);
+}
+
+.task-container table th:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.task-container table th:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.task-container table tr td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.task-container table tr td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.task-container table th,
+td {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.task-container table th {
+  height: 50px;
+  font-size: 15px;
+  color: #2c2c2c;
+}
+
+.task-container table td {
+  height: 40px;
+}
+
+.task-container table th:nth-child(2) {
+  width: 180px;
+}
+
+.task-container table th:nth-child(3) {
+  width: 150px;
+}
+
+.task-container table th:nth-child(4) {
+  width: 110px;
+}
+
+.task-container table th:last-child {
+  width: 55px;
+}
+
+.three-dot-header,
+.three-dot-option-img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(50%);
+}
+
+.three-dot-option-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.three-dot-option-section:hover {
+  background-color: rgba(105, 92, 254, 0.37);
+}
+
+.three-dot-option-img {
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+.three-dot-option {
+  position: absolute;
+  z-index: 5;
+  background-color: rgba(105, 30, 155, 0.08);
+  padding: 10px 2px;
+  border-radius: 5px;
+  border: 1px solid #695cfe;
+  backdrop-filter: blur(40px);
+  width: 120px;
+  left: -140px;
+}
+
+.three-dot-option p {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgba(138, 60, 173, 0.2);
+  cursor: pointer;
+}
+
+.three-dot-option p:first-child {
+  background-color: rgba(72, 170, 206, 0.5);
+  border: 1px solid rgba(15, 56, 190, 0.83);
+}
+
+.three-dot-option p:first-child:hover {
+  background-color: rgba(51, 161, 203, 0.5);
+  border: 1px solid rgba(9, 47, 169, 0.83);
+}
+
+.three-dot-option p:nth-child(2) {
+  background-color: rgba(206, 72, 72, 0.5);
+  border: 1px solid rgba(190, 15, 15, 0.83);
+}
+.three-dot-option p:nth-child(2):hover {
+  background-color: rgba(204, 56, 56, 0.5);
+  border: 1px solid rgba(173, 11, 11, 0.83);
+}
+
+.three-dot-option p:last-child {
+  background-color: rgba(140, 206, 72, 0.5);
+  border: 1px solid rgba(109, 190, 15, 0.83);
+}
+.three-dot-option p:last-child:hover {
+  background-color: rgba(117, 204, 31, 0.5);
+  border: 1px solid rgba(113, 208, 6, 0.83);
+}
+
+.priority-flag {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid rgba(101, 101, 101, 0.45);
+}
+
+.priority-flag img {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 3px;
+  left: 4px;
+}
+
+.progress-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.dot,
+.orange-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: green;
+}
+
+.orange-dot {
+  background-color: orangered;
+}
+
+@media (max-width: 850px) {
+  .task-container table th:nth-child(2) {
+    width: 150px;
+  }
+
+  .task-container table th:nth-child(3) {
+    width: 130px;
+  }
+
+  .task-container table th:nth-child(4) {
+    width: 90px;
+  }
+
+  .task-container table th:last-child {
+    width: 55px;
+  }
+  tbody {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 650px) {
+  thead tr th {
+    font-size: 14px;
+  }
+
+  tbody {
+    font-size: 14px;
+  }
+
+  .task-container table th:nth-child(2) {
+    width: 130px;
+  }
+
+  .task-container table th:nth-child(4) {
+    width: 80px;
+  }
+
+  .three-dot-option-img {
+    height: 16px;
+    width: 16px;
+  }
+}
