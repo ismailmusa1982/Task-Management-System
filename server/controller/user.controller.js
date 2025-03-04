@@ -2,7 +2,7 @@ import { user } from "../model/user.js";
 import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import { Error } from "mongoose";
-
+//User controller
 export const getUser = (req, res, next) => {
   const id = req.userId;
   user

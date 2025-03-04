@@ -4,7 +4,7 @@ import { user } from "../model/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-
+// Signup Controller
 export const signup = (req, res, next) => {
   const error = validationResult(req);
 
