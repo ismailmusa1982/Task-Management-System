@@ -56,8 +56,8 @@ pipeline {
       steps {
         script {
           echo 'Building Docker images...'
-          def frontendImage = docker.build("task-frontend:latest", "-f client/Dockerfile .")
-          def backendImage = docker.build("task-backend:latest", "-f server/Dockerfile .")
+          def frontendImage = docker.build("task-frontend:latest", "-f client/Dockerfile client")
+          def backendImage = docker.build("task-backend:latest", "-f server/Dockerfile server")
         }
       }
     }
