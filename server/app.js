@@ -10,15 +10,23 @@ import userRoutes from "./routes/user.routes.js";
 const app = express();
 const port = 3030;
 
-const MONGO_URL = `mongodb+srv://rehan985:Earthandworld.985@cluster0.pjusbnc.mongodb.net/taskmanager`;
+const MONGO_URL = `mongodb://mongodb-service:27017/taskmanager`;
+
+//const MONGO_URL = `mongodb+srv://rehan985:Earthandworld.985@cluster0.pjusbnc.mongodb.net/taskmanager`;
 
 const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
 
 const corsOptions = {
-  origin: clientUrl,
+  origin: (origin, callback) => {
+    if (!origin) {
+      return callback(null, true); // Allow requests with no origin (like mobile apps or Postman)
+    }
+    callback(null, origin); // Allow the requesting origin
+  },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   credentials: true,
 };
+
 
 app.use(cors(corsOptions));
 app.use(express.json());
