@@ -9,12 +9,10 @@ pipeline {
     stage('Setup Kubernetes Secrets') {
       steps {
         script {
-          // Load kubeconfig from Jenkins credentials
           withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]) {
-            // Use the kubeconfig for all kubectl commands in this block:
             sh 'export KUBECONFIG=$KUBECONFIG_FILE'
-            
-            // Update frontend secret using Jenkins credentials
+            sh 'kubectl cluster-info' // Debug step
+            sh 'kubectl config get-contexts' // Debug step
             withCredentials([string(credentialsId: 'VITE_SERVER_URL', variable: 'VITE_SERVER_URL')]) {
               sh """
                 echo "Updating frontend secret..."
@@ -24,7 +22,6 @@ pipeline {
                   --dry-run=client -o yaml | kubectl apply -f -
               """
             }
-            // Update backend secret using Jenkins credentials
             withCredentials([
               string(credentialsId: 'JWT_SECRET', variable: 'JWT_SECRET'),
               string(credentialsId: 'COOKIE_DOMAIN', variable: 'COOKIE_DOMAIN'),
@@ -48,6 +45,7 @@ pipeline {
         }
       }
     }
+
     stage('Checkout Code') {
       steps {
         echo 'Checking out code from GitHub...'
