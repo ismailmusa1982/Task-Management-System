@@ -51,7 +51,7 @@ pipeline {
     stage('Checkout Code') {
       steps {
         echo 'Checking out code from GitHub...'
-        git 'https://github.com/ismailmusa1982/Task-Management-System.git'
+        git branch: 'master', url: 'https://github.com/ismailmusa1982/Task-Management-System.git'
       }
     }
     stage('Build Docker Images') {
