@@ -3,16 +3,17 @@ pipeline {
   environment {
     REGISTRY = 'docker.io/ismailmusa1982'
     DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
-    // You can define other global variables here if needed
   }
   stages {
     stage('Setup Kubernetes Secrets') {
       steps {
         script {
           withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]) {
+            // Use the kubeconfig for kubectl commands
             sh 'export KUBECONFIG=$KUBECONFIG_FILE'
-            sh 'kubectl cluster-info' // Debug step
-            sh 'kubectl config get-contexts' // Debug step
+            sh 'kubectl cluster-info'
+            sh 'kubectl config get-contexts'
+            // Update frontend secret
             withCredentials([string(credentialsId: 'VITE_SERVER_URL', variable: 'VITE_SERVER_URL')]) {
               sh """
                 echo "Updating frontend secret..."
@@ -22,6 +23,7 @@ pipeline {
                   --dry-run=client -o yaml | kubectl apply -f -
               """
             }
+            // Update backend secret
             withCredentials([
               string(credentialsId: 'JWT_SECRET', variable: 'JWT_SECRET'),
               string(credentialsId: 'COOKIE_DOMAIN', variable: 'COOKIE_DOMAIN'),
@@ -45,7 +47,6 @@ pipeline {
         }
       }
     }
-
     stage('Checkout Code') {
       steps {
         echo 'Checking out code from GitHub...'
@@ -56,8 +57,9 @@ pipeline {
       steps {
         script {
           echo 'Building Docker images...'
-          def frontendImage = docker.build("task-frontend:latest", "-f client/Dockerfile client")
-          def backendImage = docker.build("task-backend:latest", "-f server/Dockerfile server")
+          // Tag images with the full repository name so they push correctly
+          def frontendImage = docker.build("${env.REGISTRY}/task-frontend:latest", "-f client/Dockerfile client")
+          def backendImage = docker.build("${env.REGISTRY}/task-backend:latest", "-f server/Dockerfile server")
         }
       }
     }
@@ -66,8 +68,8 @@ pipeline {
         script {
           echo 'Pushing Docker images to Docker Hub...'
           docker.withRegistry("https://${env.REGISTRY}", env.DOCKER_CREDENTIALS_ID) {
-            docker.image("task-frontend:latest").push()
-            docker.image("task-backend:latest").push()
+            docker.image("${env.REGISTRY}/task-frontend:latest").push()
+            docker.image("${env.REGISTRY}/task-backend:latest").push()
           }
         }
       }
