@@ -136,7 +136,7 @@ const Tasks = () => {
       )}
 
       <div className={styles["task-header"]}>
-        <p>Task Board</p>
+        <p>Task Board Section</p>
         <div className={styles["task-header-options"]}>
           <div
             onClick={newTaskHandler}
