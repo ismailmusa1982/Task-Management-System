@@ -1,6 +1,7 @@
 pipeline {
   agent any
   environment {
+    // Use just your Docker Hub username (without docker.io/ prefix)
     REGISTRY = 'ismailmusa1982'
     DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
   }
@@ -18,8 +19,8 @@ pipeline {
               sh """
                 echo "Updating frontend secret..."
                 kubectl delete secret frontend-secrets --ignore-not-found=true
-                kubectl create secret generic frontend-secrets \
-                  --from-literal=VITE_SERVER_URL=${VITE_SERVER_URL} \
+                kubectl create secret generic frontend-secrets \\
+                  --from-literal=VITE_SERVER_URL=${VITE_SERVER_URL} \\
                   --dry-run=client -o yaml | kubectl apply -f -
               """
             }
@@ -57,7 +58,7 @@ pipeline {
       steps {
         script {
           echo 'Building Docker images...'
-          // Tag images with the full repository name so they push correctly
+          // Build and tag images as ismailmusa1982/task-frontend:latest and ismailmusa1982/task-backend:latest
           def frontendImage = docker.build("${env.REGISTRY}/task-frontend:latest", "-f client/Dockerfile client")
           def backendImage = docker.build("${env.REGISTRY}/task-backend:latest", "-f server/Dockerfile server")
         }
@@ -67,7 +68,8 @@ pipeline {
       steps {
         script {
           echo 'Pushing Docker images to Docker Hub...'
-          docker.withRegistry("https://${env.REGISTRY}", env.DOCKER_CREDENTIALS_ID) {
+          // Using an empty string tells Docker to use the default Docker Hub endpoint
+          docker.withRegistry('', env.DOCKER_CREDENTIALS_ID) {
             docker.image("${env.REGISTRY}/task-frontend:latest").push()
             docker.image("${env.REGISTRY}/task-backend:latest").push()
           }
