@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    REGISTRY = 'docker.io/ismailmusa1982'
+    REGISTRY = 'ismailmusa1982'
     DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
   }
   stages {
